@@ -2,23 +2,33 @@
   "name": "memo-spa",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "cra-template": "1.2.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-scripts": "5.0.1"
+    "postcss-loader": "^8.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.0",
+    "@babel/eslint-parser": "^7.25.9",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "prettier": "^3.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "fix": "prettier --write 'src/**/*.{js,jsx,json,css}'"
   },
   "browserslist": {
     "production": [
