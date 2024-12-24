@@ -1,58 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function MemoEditor({ memo, onSave, onDelete }) {
   const [title, setTitle] = useState(memo.title);
   const [content, setContent] = useState(memo.content);
 
+  useEffect(() => {
+    setTitle(memo.title);
+    setContent(memo.content);
+  }, [memo]);
+
   const handleSave = () => {
-    onSave(memo.id, { title, content });
+    onSave({ title, content });
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px',
-        maxWidth: '400px',
-      }}
-    >
-      <h3>編集</h3>
+    <div>
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="タイトルを入力"
         style={{
-          height: '40px',
+          width: '90%',
           padding: '8px',
-          boxSizing: 'border-box',
-          border: '1px solid #ccc',
+          marginBottom: '10px',
+          fontSize: '16px',
           borderRadius: '4px',
+          border: '1px solid #ccc',
         }}
       />
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder="内容を入力"
+        placeholder="メモ内容を入力"
         style={{
-          height: '200px',
+          width: '90%',
+          height: '120px',
           padding: '8px',
-          boxSizing: 'border-box',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
+          marginBottom: '10px',
           fontSize: '16px',
-          lineHeight: '1.5',
+          borderRadius: '4px',
+          border: '1px solid #ccc',
         }}
-      />
-      <div style={{ display: 'flex', gap: '10px' }}>
+      ></textarea>
+      <div style={{ marginTop: '10px' }}>
         <button
           onClick={handleSave}
           style={{
-            height: '40px',
-            padding: '0 16px',
+            padding: '8px 16px',
+            marginRight: '8px',
             backgroundColor: '#e0e0e0',
-            color: '#000',
             border: '1px solid #ccc',
             borderRadius: '4px',
             cursor: 'pointer',
@@ -61,12 +58,10 @@ function MemoEditor({ memo, onSave, onDelete }) {
           保存
         </button>
         <button
-          onClick={() => onDelete(memo.id)}
+          onClick={onDelete}
           style={{
-            height: '40px',
-            padding: '0 16px',
+            padding: '8px 16px',
             backgroundColor: '#e0e0e0',
-            color: '#000',
             border: '1px solid #ccc',
             borderRadius: '4px',
             cursor: 'pointer',

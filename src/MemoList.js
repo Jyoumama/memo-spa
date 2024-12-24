@@ -11,8 +11,8 @@ function MemoList({ memos, onSelectMemo, onAddMemo }) {
             onClick={() => onSelectMemo(memo.id)}
             style={{
               cursor: 'pointer',
-              textDecoration: 'underline',
               color: 'blue',
+              textDecoration: 'underline',
               marginBottom: '8px',
             }}
           >
@@ -23,13 +23,9 @@ function MemoList({ memos, onSelectMemo, onAddMemo }) {
       <button
         onClick={onAddMemo}
         style={{
-          display: 'block',
-          marginTop: '10px',
           padding: '8px 16px',
-          fontSize: '16px',
           backgroundColor: '#e0e0e0',
-          color: '#000',
-          border: '1px solid #ccc',
+          border: 'none',
           borderRadius: '4px',
           cursor: 'pointer',
         }}
