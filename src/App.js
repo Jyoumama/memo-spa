@@ -1,13 +1,23 @@
-import { useState } from 'react';
-import MemoList from './MemoList.js';
-import MemoEditor from './MemoEditor.js';
+import React, { useState, useEffect } from 'react';
+import MemoList from './MemoList';
+import MemoEditor from './MemoEditor';
 
 function App() {
-  const [memos, setMemos] = useState([
-    { id: 1, title: 'メモ1', content: 'メモ1の内容' },
-    { id: 2, title: 'メモ2', content: 'メモ2の内容' },
-  ]);
+  const [memos, setMemos] = useState(() => {
+    const storedMemos = localStorage.getItem('memos');
+    return storedMemos
+      ? JSON.parse(storedMemos)
+      : [
+          { id: 1, title: 'メモ1', content: 'メモ1の内容' },
+          { id: 2, title: 'メモ2', content: 'メモ2の内容' },
+        ];
+  });
+
   const [selectedMemoId, setSelectedMemoId] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem('memos', JSON.stringify(memos));
+  }, [memos]);
 
   const handleAddMemo = () => {
     const newMemo = {
@@ -19,13 +29,15 @@ function App() {
     setSelectedMemoId(newMemo.id);
   };
 
-  const handleSaveMemo = (id, content) => {
+  // メモのタイトルと内容を保存
+  const handleSaveMemo = (id, updatedMemo) => {
     setMemos(
-      memos.map((memo) => (memo.id === id ? { ...memo, content } : memo))
+      memos.map((memo) => (memo.id === id ? { ...memo, ...updatedMemo } : memo))
     );
     setSelectedMemoId(null);
   };
 
+  // メモを削除
   const handleDeleteMemo = (id) => {
     setMemos(memos.filter((memo) => memo.id !== id));
     setSelectedMemoId(null);
