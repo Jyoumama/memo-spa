@@ -1,3 +1,5 @@
+import React from 'react';
+
 function MemoList({ memos, onSelectMemo, onAddMemo }) {
   return (
     <div>
