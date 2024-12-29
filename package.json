@@ -2,13 +2,9 @@
   "name": "memo-spa",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "dependencies": {
-    "cra-template": "1.2.0",
-    "postcss-loader": "^8.1.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
@@ -16,17 +12,22 @@
     "@babel/eslint-parser": "^7.25.9",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
+    "babel-loader": "^9.2.1",
+    "css-loader": "^7.1.2",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "prettier": "^3.4.2"
+    "postcss-loader": "^8.1.1",
+    "prettier": "^3.4.2",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "webpack serve --config webpack.config.js",
+    "build": "webpack --config webpack.config.js",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "fix": "prettier --write 'src/**/*.{js,jsx,json,css}'"
   },
