@@ -29,7 +29,6 @@ function App() {
     setSelectedMemoId(newMemo.id);
   };
 
-  // メモのタイトルと内容を保存
   const handleSaveMemo = (id, updatedMemo) => {
     setMemos(
       memos.map((memo) => (memo.id === id ? { ...memo, ...updatedMemo } : memo))
@@ -37,7 +36,6 @@ function App() {
     setSelectedMemoId(null);
   };
 
-  // メモを削除
   const handleDeleteMemo = (id) => {
     setMemos(memos.filter((memo) => memo.id !== id));
     setSelectedMemoId(null);
