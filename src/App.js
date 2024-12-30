@@ -46,20 +46,25 @@ function App() {
   const selectedMemo = memos.find((memo) => memo.id === selectedMemoId);
 
   return (
-    <div>
-      <h1>アプリケーション</h1>
-      {/* MemoList: 常に表示 */}
-      <MemoList
-        memos={memos}
-        onSelectMemo={setSelectedMemoId}
-        onAddMemo={handleAddMemo}
-      />
-      {/* MemoEditor: 常に表示 */}
-      <MemoEditor
-        memo={selectedMemo || { id: null, title: '', content: '' }}
-        onSave={handleSaveMemo}
-        onDelete={handleDeleteMemo}
-      />
+    <div style={{ display: 'flex', gap: '20px' }}>
+      <div style={{ width: '300px' }}>
+        <MemoList
+          memos={memos}
+          onSelectMemo={setSelectedMemoId}
+          onAddMemo={handleAddMemo}
+        />
+      </div>
+      <div style={{ flexGrow: 1 }}>
+        {selectedMemo ? (
+          <MemoEditor
+            memo={selectedMemo}
+            onSave={handleSaveMemo}
+            onDelete={handleDeleteMemo}
+          />
+        ) : (
+          <div>メモを選択してください。</div>
+        )}
+      </div>
     </div>
   );
 }

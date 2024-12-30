@@ -36,23 +36,41 @@ function MemoEditor({ memo, onSave, onDelete }) {
         onChange={(e) => setContent(e.target.value)}
         placeholder="内容を入力"
         style={{
-          height: '100px',
+          height: '200px',
           padding: '8px',
           boxSizing: 'border-box',
           border: '1px solid #ccc',
           borderRadius: '4px',
+          fontSize: '16px',
+          lineHeight: '1.5',
         }}
-      ></textarea>
+      />
       <div style={{ display: 'flex', gap: '10px' }}>
         <button
           onClick={handleSave}
-          style={{ height: '40px', padding: '0 16px' }}
+          style={{
+            height: '40px',
+            padding: '0 16px',
+            backgroundColor: '#e0e0e0',
+            color: '#000',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
         >
           保存
         </button>
         <button
           onClick={() => onDelete(memo.id)}
-          style={{ height: '40px', padding: '0 16px' }}
+          style={{
+            height: '40px',
+            padding: '0 16px',
+            backgroundColor: '#e0e0e0',
+            color: '#000',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
         >
           削除
         </button>
