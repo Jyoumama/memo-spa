@@ -25,7 +25,13 @@ export default [
       "react/react-in-jsx-scope": "off",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-      "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-unused-vars": [
+        "warn", 
+        { 
+          varsIgnorePattern: "React",
+          argsIgnorePattern: "^_",
+        }
+      ],
       "no-console": "warn",
     },
   },
