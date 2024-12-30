@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import MemoList from './MemoList';
+// eslint-disable-next-line no-unused-vars
 import MemoEditor from './MemoEditor';
 
 function App() {
@@ -45,19 +47,19 @@ function App() {
 
   return (
     <div>
-      {selectedMemo ? (
-        <MemoEditor
-          memo={selectedMemo}
-          onSave={handleSaveMemo}
-          onDelete={handleDeleteMemo}
-        />
-      ) : (
-        <MemoList
-          memos={memos}
-          onSelectMemo={setSelectedMemoId}
-          onAddMemo={handleAddMemo}
-        />
-      )}
+      <h1>アプリケーション</h1>
+      {/* MemoList: 常に表示 */}
+      <MemoList
+        memos={memos}
+        onSelectMemo={setSelectedMemoId}
+        onAddMemo={handleAddMemo}
+      />
+      {/* MemoEditor: 常に表示 */}
+      <MemoEditor
+        memo={selectedMemo || { id: null, title: '', content: '' }}
+        onSave={handleSaveMemo}
+        onDelete={handleDeleteMemo}
+      />
     </div>
   );
 }

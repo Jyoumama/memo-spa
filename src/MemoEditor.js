@@ -9,21 +9,54 @@ function MemoEditor({ memo, onSave, onDelete }) {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+        maxWidth: '400px',
+      }}
+    >
       <h3>編集</h3>
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="タイトルを入力"
+        style={{
+          height: '40px',
+          padding: '8px',
+          boxSizing: 'border-box',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+        }}
       />
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="内容を入力"
+        style={{
+          height: '100px',
+          padding: '8px',
+          boxSizing: 'border-box',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+        }}
       ></textarea>
-      <button onClick={handleSave}>保存</button>
-      <button onClick={() => onDelete(memo.id)}>削除</button>
+      <div style={{ display: 'flex', gap: '10px' }}>
+        <button
+          onClick={handleSave}
+          style={{ height: '40px', padding: '0 16px' }}
+        >
+          保存
+        </button>
+        <button
+          onClick={() => onDelete(memo.id)}
+          style={{ height: '40px', padding: '0 16px' }}
+        >
+          削除
+        </button>
+      </div>
     </div>
   );
 }
