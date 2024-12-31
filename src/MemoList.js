@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MemoList({ memos, onSelectMemo, onAddMemo }) {
+function MemoList({ memos, onSelectMemo, onAddMemo, isLoggedIn}) {
   return (
     <div>
       <h3>一覧</h3>
@@ -20,6 +20,7 @@ function MemoList({ memos, onSelectMemo, onAddMemo }) {
           </li>
         ))}
       </ul>
+    {isLoggedIn && (
       <button
         onClick={onAddMemo}
         style={{
@@ -32,6 +33,7 @@ function MemoList({ memos, onSelectMemo, onAddMemo }) {
       >
         ＋
       </button>
+    )}
     </div>
   );
 }

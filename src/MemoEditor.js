@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 function MemoEditor({ memo, onSave, onDelete }) {
-  const [title, setTitle] = useState(memo.title);
-  const [content, setContent] = useState(memo.content);
+  const { isLoggedIn } = useAuth();
+
+  const [title, setTitle] = useState(memo ? memo.title : '');
+  const [content, setContent] = useState(memo ? memo.content : '');
 
   useEffect(() => {
     setTitle(memo.title);
@@ -12,6 +14,10 @@ function MemoEditor({ memo, onSave, onDelete }) {
   const handleSave = () => {
     onSave({ title, content });
   };
+
+  if(!memo){
+    return <p>メモが選択されていません。</p>;
+  }
 
   return (
     <div>
