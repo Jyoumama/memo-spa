@@ -1,4 +1,5 @@
-import { useAuth } from '../contexts/AuthContext.js';
+import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginButton = () => {
   const { isLoggedIn, login, logout } = useAuth();

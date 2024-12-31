@@ -3,8 +3,9 @@ import { useAuth } from './contexts/AuthContext';
 
 function MemoEditor({ memo, onSave, onDelete }) {
   const { isLoggedIn } = useAuth();
-  const [title, setTitle] = useState(memo.title);
-  const [content, setContent] = useState(memo.content);
+
+  const [title, setTitle] = useState(memo ? memo.title : '');
+  const [content, setContent] = useState(memo ? memo.content : '');
 
   const handleSave = () => {
     if (isLoggedIn) {
@@ -17,6 +18,10 @@ function MemoEditor({ memo, onSave, onDelete }) {
       onDelete(memo.id);
     }
   };
+
+  if(!memo){
+    return <p>メモが選択されていません。</p>;
+  }
 
   return (
     <div

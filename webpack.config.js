@@ -34,7 +34,7 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
     },
     compress: true,
-    port: 8080,
+    port: 'auto',
     open: true,
     hot: true,
     setupMiddlewares: (middlewares, devServer) => {
