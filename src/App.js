@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// eslint-disable-next-line no-unused-vars
 import MemoList from './MemoList';
-// eslint-disable-next-line no-unused-vars
 import MemoEditor from './MemoEditor';
 
 function App() {
