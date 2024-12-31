@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-// eslint-disable-next-line no-unused-vars
+import React, { useState } from 'react';
+import { useAuth } from './contexts/AuthContext';
 import MemoList from './MemoList';
-// eslint-disable-next-line no-unused-vars
 import MemoEditor from './MemoEditor';
+import LoginButton from './components/LoginButton';
 
-function App() {
+function AppContent() {
+  const { isLoggedIn } = useAuth();
   const [memos, setMemos] = useState(() => {
     const storedMemos = localStorage.getItem('memos');
     return storedMemos
@@ -14,59 +15,59 @@ function App() {
           { id: 2, title: 'メモ2', content: 'メモ2の内容' },
         ];
   });
-
   const [selectedMemoId, setSelectedMemoId] = useState(null);
 
-  useEffect(() => {
-    localStorage.setItem('memos', JSON.stringify(memos));
-  }, [memos]);
-
-  const handleAddMemo = () => {
+  const addMemo = (title, content) => {
     const newMemo = {
       id: Date.now(),
-      title: `メモ${memos.length + 1}`,
-      content: '',
+      title,
+      content,
     };
-    setMemos([...memos, newMemo]);
-    setSelectedMemoId(newMemo.id);
+    const updatedMemos = [...memos, newMemo];
+    setMemos(updatedMemos);
+    localStorage.setItem('memos', JSON.stringify(updatedMemos));
   };
 
-  const handleSaveMemo = (id, updatedMemo) => {
-    setMemos(
-      memos.map((memo) => (memo.id === id ? { ...memo, ...updatedMemo } : memo))
+  const updateMemo = (id, updatedMemo) => {
+    const updatedMemos = memos.map((memo) =>
+      memo.id === id ? { ...memo, ...updatedMemo } : memo
     );
-    setSelectedMemoId(null);
+    setMemos(updatedMemos);
+    localStorage.setItem('memos', JSON.stringify(updatedMemos));
   };
 
-  const handleDeleteMemo = (id) => {
-    setMemos(memos.filter((memo) => memo.id !== id));
-    setSelectedMemoId(null);
+  const deleteMemo = (id) => {
+    const updatedMemos = memos.filter((memo) => memo.id !== id);
+    setMemos(updatedMemos);
+    localStorage.setItem('memos', JSON.stringify(updatedMemos));
   };
-
-  const selectedMemo = memos.find((memo) => memo.id === selectedMemoId);
 
   return (
-    <div style={{ display: 'flex', gap: '20px' }}>
-      <div style={{ width: '300px' }}>
-        <MemoList
-          memos={memos}
-          onSelectMemo={setSelectedMemoId}
-          onAddMemo={handleAddMemo}
-        />
-      </div>
-      <div style={{ flexGrow: 1 }}>
-        {selectedMemo ? (
-          <MemoEditor
-            memo={selectedMemo}
-            onSave={handleSaveMemo}
-            onDelete={handleDeleteMemo}
+    <div>
+      {!isLoggedIn ? (
+        <LoginButton />
+      ) : (
+        <>
+          <button onClick={useAuth().logout}>ログアウト</button>
+          <MemoList
+            memos={memos}
+            setSelectedMemoId={setSelectedMemoId}
+            deleteMemo={deleteMemo}
           />
-        ) : (
-          <div>メモを選択してください。</div>
-        )}
-      </div>
+          {selectedMemoId ? (
+            <MemoEditor
+              memo={memos.find((memo) => memo.id === selectedMemoId)}
+              updateMemo={(updatedMemo) =>
+                updateMemo(selectedMemoId, updatedMemo)
+              }
+            />
+          ) : (
+            <button onClick={() => addMemo('新しいメモ', '内容')}>新しいメモを追加</button>
+          )}
+        </>
+      )}
     </div>
   );
 }
 
-export default App;
+export default AppContent;

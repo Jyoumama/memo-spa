@@ -1,6 +1,9 @@
 import React from 'react';
+import { useAuth } from './contexts/AuthContext';
 
 function MemoList({ memos, onSelectMemo, onAddMemo }) {
+  const { isLoggedIn } = useAuth();
+
   return (
     <div>
       <h3>一覧</h3>
@@ -8,18 +11,20 @@ function MemoList({ memos, onSelectMemo, onAddMemo }) {
         {memos.map((memo) => (
           <li
             key={memo.id}
-            onClick={() => onSelectMemo(memo.id)}
+            onClick={() => isLoggedIn && onSelectMemo(memo.id)}
             style={{
-              cursor: 'pointer',
+              cursor: isLoggedIn ? 'pointer' : 'not-allowed',
               textDecoration: 'underline',
               color: 'blue',
               marginBottom: '8px',
+              opacity: isLoggedIn ? 1 : 0.5,
             }}
           >
             {memo.title}
           </li>
         ))}
       </ul>
+    {isLoggedIn ? (
       <button
         onClick={onAddMemo}
         style={{
@@ -36,8 +41,11 @@ function MemoList({ memos, onSelectMemo, onAddMemo }) {
       >
         ＋
       </button>
+    ) : (
+      <p>ログインするとメモの追加が可能です。</p>
+    )}
     </div>
   );
 }
-
+ 
 export default MemoList;
