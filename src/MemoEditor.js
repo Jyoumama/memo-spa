@@ -8,15 +8,19 @@ function MemoEditor({ memo, onSave, onDelete }) {
   const [content, setContent] = useState(memo ? memo.content : '');
 
   useEffect(() => {
-    setTitle(memo.title);
-    setContent(memo.content);
+    if (memo) {
+      setTitle(memo.title);
+      setContent(memo.content);
+    }
   }, [memo]);
 
   const handleSave = () => {
-    onSave({ title, content });
+    if (isLoggedIn) {
+      onSave(memo.id, { title, content });
+    }
   };
 
-  if(!memo){
+  if (!memo) {
     return <p>メモが選択されていません。</p>;
   }
 
