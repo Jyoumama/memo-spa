@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from './contexts/AuthContext';
 
 function MemoEditor({ memo, onSave, onDelete }) {
@@ -7,19 +7,20 @@ function MemoEditor({ memo, onSave, onDelete }) {
   const [title, setTitle] = useState(memo ? memo.title : '');
   const [content, setContent] = useState(memo ? memo.content : '');
 
+  useEffect(() => {
+    if (memo) {
+      setTitle(memo.title);
+      setContent(memo.content);
+    }
+  }, [memo]);
+
   const handleSave = () => {
     if (isLoggedIn) {
       onSave(memo.id, { title, content });
     }
   };
 
-  const handleDelete = () => {
-    if (isLoggedIn) {
-      onDelete(memo.id);
-    }
-  };
-
-  if(!memo){
+  if (!memo) {
     return <p>メモが選択されていません。</p>;
   }
 
