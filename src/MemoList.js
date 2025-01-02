@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MemoList({ memos, onSelectMemo, onAddMemo, isLoggedIn}) {
+function MemoList({ memos, onSelectMemo, onAddMemo, isLoggedIn }) {
   return (
     <div>
       <h3>一覧</h3>
@@ -20,20 +20,24 @@ function MemoList({ memos, onSelectMemo, onAddMemo, isLoggedIn}) {
           </li>
         ))}
       </ul>
-    {isLoggedIn && (
-      <button
-        onClick={onAddMemo}
-        style={{
-          padding: '8px 16px',
-          backgroundColor: '#e0e0e0',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
-        ＋
-      </button>
-    )}
+      {isLoggedIn && (
+        <button
+          onClick={onAddMemo}
+          style={{
+            display: 'block',
+            marginTop: '10px',
+            padding: '8px 16px',
+            fontSize: '16px',
+            backgroundColor: '#e0e0e0',
+            color: '#000',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+        >
+          ＋
+        </button>
+      )}
     </div>
   );
 }
