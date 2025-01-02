@@ -5,7 +5,7 @@ import MemoEditor from './MemoEditor';
 import LoginButton from './components/LoginButton';
 
 function AppContent() {
-  const { isLoggedIn, login, logout } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
   const [memos, setMemos] = useState(() => {
     const storedMemos = localStorage.getItem('memos');
     return storedMemos
@@ -46,19 +46,21 @@ function AppContent() {
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px'}}>
+    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
       <h1>メモアプリ</h1>
       <p>このアプリは、ログイン後にメモの追加、編集、削除が可能です。</p>
 
       {!isLoggedIn ? (
         <>
-        <p>現在は閲覧モードです。編集や削除を行うにはログインしてください。</p>
-        <LoginButton />
+          <p>
+            現在は閲覧モードです。編集や削除を行うにはログインしてください。
+          </p>
+          <LoginButton />
         </>
       ) : (
-          <button onClick={logout} style={{ marginBottom: '20px' }}>
-            ログアウト
-          </button>
+        <button onClick={logout} style={{ marginBottom: '20px' }}>
+          ログアウト
+        </button>
       )}
 
       <MemoList
@@ -73,12 +75,12 @@ function AppContent() {
           memo={memos.find((memo) => memo.id === selectedMemoId)}
           onSave={(id, updatedMemo) => {
             if (!updatedMemo) {
-              console.error("updatedMemo is not defined");
+              console.error('updatedMemo is not defined');
               return;
             }
             updateMemo(id, updatedMemo);
           }}
-          onDelete={()=> {
+          onDelete={() => {
             deleteMemo(selectedMemoId);
             setSelectedMemoId(null);
           }}
