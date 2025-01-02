@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from './contexts/AuthContext';
 
 function MemoEditor({ memo, onSave, onDelete }) {
-  const [title, setTitle] = useState(memo.title);
-  const [content, setContent] = useState(memo.content);
+  const { isLoggedIn } = useAuth();
+
+  const [title, setTitle] = useState(memo ? memo.title : '');
+  const [content, setContent] = useState(memo ? memo.content : '');
+
+  useEffect(() => {
+    if (memo) {
+      setTitle(memo.title);
+      setContent(memo.content);
+    }
+  }, [memo]);
 
   const handleSave = () => {
-    onSave(memo.id, { title, content });
+    if (isLoggedIn) {
+      onSave(memo.id, { title, content });
+    }
   };
+
+  if (!memo) {
+    return <p>メモが選択されていません。</p>;
+  }
 
   return (
     <div
@@ -48,6 +64,7 @@ function MemoEditor({ memo, onSave, onDelete }) {
       <div style={{ display: 'flex', gap: '10px' }}>
         <button
           onClick={handleSave}
+          disabled={!isLoggedIn}
           style={{
             height: '40px',
             padding: '0 16px',
@@ -56,12 +73,14 @@ function MemoEditor({ memo, onSave, onDelete }) {
             border: '1px solid #ccc',
             borderRadius: '4px',
             cursor: 'pointer',
+            opacity: isLoggedIn ? 1 : 0.5,
           }}
         >
           保存
         </button>
         <button
           onClick={() => onDelete(memo.id)}
+          disabled={!isLoggedIn}
           style={{
             height: '40px',
             padding: '0 16px',
@@ -70,11 +89,13 @@ function MemoEditor({ memo, onSave, onDelete }) {
             border: '1px solid #ccc',
             borderRadius: '4px',
             cursor: 'pointer',
+            opacity: isLoggedIn ? 1 : 0.5,
           }}
         >
           削除
         </button>
       </div>
+      {!isLoggedIn && <p>ログインすると編集・削除が可能です。</p>}
     </div>
   );
 }

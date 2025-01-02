@@ -33,7 +33,7 @@ export default [
           argsIgnorePattern: "^_",
         }
       ],
-      "no-console": "warn",
+      "no-console": ["error", { allow: ["warn", "error"] }]
     },
   },
 ];
