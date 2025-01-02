@@ -5,7 +5,7 @@ import LoginButton from './components/LoginButton';
 import { useAuth } from './contexts/AuthContext';
 
 function AppContent() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
   const [memos, setMemos] = useState(() => {
     const storedMemos = localStorage.getItem('memos');
     return storedMemos
@@ -66,7 +66,7 @@ function AppContent() {
   const selectedMemo = memos.find((memo) => memo.id === selectedMemoId);
 
   return (
-    <div>
+    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
       <h1>メモアプリ</h1>
       <LoginButton />
       {!isLoggedIn && <p>ログインするとメモの追加・編集・削除が可能です。</p>}
@@ -80,23 +80,26 @@ function AppContent() {
           />
         </div>
         <div style={{ flexGrow: 1 }}>
-          {isLoggedIn ? (
-            selectedMemo ? (
-              <MemoEditor
-                memo={selectedMemo}
-                onSave={(updatedMemo) =>
-                  handleSaveMemo(selectedMemo.id, updatedMemo)
-                }
-                onDelete={() => handleDeleteMemo(selectedMemo.id)}
-              />
-            ) : (
-              <div>メモを選択してください。</div>
-            )
-          ) : (
+          {!isLoggedIn ? (
             <div>ログインしてください。</div>
+          ) : selectedMemo ? (
+            <MemoEditor
+              memo={selectedMemo}
+              onSave={(updatedMemo) =>
+                handleSaveMemo(selectedMemo.id, updatedMemo)
+              }
+              onDelete={() => handleDeleteMemo(selectedMemo.id)}
+            />
+          ) : (
+            <div>メモを選択してください。</div>
           )}
         </div>
       </div>
+      {isLoggedIn && (
+        <button onClick={logout} style={{ marginBottom: '20px' }}>
+          ログアウト
+        </button>
+      )}
     </div>
   );
 }
