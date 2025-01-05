@@ -42,15 +42,19 @@ function AppContent() {
 
   const handleSaveMemo = (id, updatedMemo) => {
     if (!isLoggedIn) return;
-    setMemos(
-      memos.map((memo) =>
-        memo.id === id
-          ? { ...memo, title: updatedMemo.title, content: updatedMemo.content }
-          : memo
+
+    setMemos((prevMemos) =>
+      prevMemos.map((memo) =>
+        memo.id === id ? { ...memo, ...updatedMemo } : memo
       )
     );
     setSelectedMemoId(null);
+    console.log('Memo saved and editor closed.');
   };
+
+  const selectedMemo = selectedMemoId
+    ? memos.find((memo) => memo.id === selectedMemoId)
+    : null;
 
   const handleDeleteMemo = (id) => {
     if (!isLoggedIn) return;
@@ -63,12 +67,16 @@ function AppContent() {
     }
   };
 
-  const selectedMemo = memos.find((memo) => memo.id === selectedMemoId);
-
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
       <h1>メモアプリ</h1>
-      <LoginButton />
+      {isLoggedIn ? (
+        <button onClick={logout} style={{ marginBottom: '20px' }}>
+          ログアウト
+        </button>
+      ) : (
+        <LoginButton />
+      )}
       {!isLoggedIn && <p>ログインするとメモの追加・編集・削除が可能です。</p>}
 
       <div style={{ display: 'flex', gap: '20px' }}>
@@ -77,6 +85,7 @@ function AppContent() {
             memos={memos}
             onSelectMemo={(id) => isLoggedIn && setSelectedMemoId(id)}
             onAddMemo={handleAddMemo}
+            isLoggedIn={isLoggedIn}
           />
         </div>
         <div style={{ flexGrow: 1 }}>
@@ -95,11 +104,6 @@ function AppContent() {
           )}
         </div>
       </div>
-      {isLoggedIn && (
-        <button onClick={logout} style={{ marginBottom: '20px' }}>
-          ログアウト
-        </button>
-      )}
     </div>
   );
 }

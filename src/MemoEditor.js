@@ -14,10 +14,18 @@ function MemoEditor({ memo, onSave, onDelete }) {
     }
   }, [memo]);
 
+  const [error, setError] = useState('');
+
   const handleSave = () => {
-    if (isLoggedIn) {
-      onSave(memo.id, { title, content });
+    if (!isLoggedIn) {
+      console.error('You must be logged in to save.');
+      return;
     }
+    if(!title.trim()){
+      console.error('Title canaot be empty.');
+      return;
+    }
+      onSave({id: memo.id, title: title.trim(), content: content.trim() });
   };
 
   if (!memo) {
