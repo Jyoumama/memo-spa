@@ -4,7 +4,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import App from "../App";
 
 describe("App component", () => {
-
   beforeEach(() => {
     localStorage.clear();
   });
@@ -20,7 +19,7 @@ describe("App component", () => {
   test("adds a new memo when the add button is clicked", () => {
     render(<App />);
 
-    const addButton = screen.getByText("＋");
+    const addButton = screen.getByRole("button", { name:"＋" });
     fireEvent.click(addButton);
 
     expect(screen.getByText("メモ3")).toBeInTheDocument();
@@ -42,7 +41,7 @@ describe("App component", () => {
     const memo1 = screen.getByText("メモ1");
     fireEvent.click(memo1);
 
-    const deleteButton = screen.getByText("削除");
+    const deleteButton = screen.getRole("button",{ name:"削除"});
     fireEvent.click(deleteButton);
 
     expect(screen.queryByText("メモ1")).not.toBeInTheDocument();
